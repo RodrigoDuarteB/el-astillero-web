@@ -22,5 +22,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('test', function () {
-    echo "prueba"
+    echo "prueba";
 });
