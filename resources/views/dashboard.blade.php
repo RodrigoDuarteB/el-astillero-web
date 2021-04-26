@@ -27,4 +27,36 @@
         </div>
     </div>
 
+    <div class="container mx-auto mt-5 text-center">
+        <div class="grid grid-cols-3 gap-4 my-2">
+            <div class="bg-red-500">A</div>
+            <div class="bg-red-500">A</div>
+            <div class="bg-red-500">A</div>
+            <div class="bg-red-500">A</div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div class="bg-blue-500 col-span-2">A</div>
+            <div class="bg-blue-500">A</div>
+            <div class="bg-blue-500">A</div>
+            <div class="bg-blue-500 col-span-4">A</div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-2 my-2">
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+            <div class="bg-gray-500">A</div>
+        </div>
+
+    </div>
+
 </x-app-layout>
