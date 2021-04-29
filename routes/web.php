@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Livewire\Test;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +22,6 @@ Route::middleware(['auth:sanctum', 'verified'])
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('test', function () {
-    echo "prueba";
-});
+Route::get('test', Test::class)->name('test');
+
 
