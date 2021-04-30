@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Test;
+use App\Http\Livewire\Books;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,5 +24,5 @@ Route::middleware(['auth:sanctum', 'verified'])
 })->name('dashboard');
 
 Route::get('test', Test::class)->name('test');
-
+Route::get('books', Books::class)->name('books');
 
