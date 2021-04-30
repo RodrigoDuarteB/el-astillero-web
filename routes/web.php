@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Book;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Test;
 use App\Http\Livewire\Books;
@@ -14,9 +15,7 @@ use App\Http\Livewire\Books;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
 Route::middleware(['auth:sanctum', 'verified'])
 ->get('/dashboard', function () {
@@ -25,4 +24,5 @@ Route::middleware(['auth:sanctum', 'verified'])
 
 Route::get('test', Test::class)->name('test');
 Route::get('books', Books::class)->name('books');
+Route::get('books/{book}', Book::class)->name('book');
 
