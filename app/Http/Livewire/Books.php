@@ -21,6 +21,7 @@ class Books extends Component{
         $books = Book::where('title', 'like', '%'.$this->search.'%')
         ->orWhere('genre', 'like', '%'.$this->search.'%')
         ->orWhere('summary', 'like', '%'.$this->search.'%')
+        ->orWhere('isbn', 'like', '%'.$this->search.'%')
         ->orderBy($this->sort, $this->direction)
         ->paginate(12);
         return view('livewire.books', compact('books'));

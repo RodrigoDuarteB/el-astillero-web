@@ -17,12 +17,19 @@ use App\Http\Livewire\Books;
 
 Route::view('/', 'welcome');
 
-Route::middleware(['auth:sanctum', 'verified'])
-->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('test', Test::class)->name('test');
 
-Route::get('test', Test::class)->name('test');
-Route::get('books', Books::class)->name('books');
-Route::get('books/{book}', Book::class)->name('book');
+    Route::prefix('books')->group(function () {
+        Route::get('/', Books::class)->name('books');
+        Route::get('/{book}', Book::class)->name('book');
+    });
 
+});
+
+
+Route::get('/test', function(){
+    $str = 'public/images/books/acsasdasf.jpg';
+    echo substr($str, 20, strlen($str));
+});

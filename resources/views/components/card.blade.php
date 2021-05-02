@@ -1,5 +1,5 @@
 <div>
-    <div class="rounded shadow-lg" style="height: 480">
+    <div class="rounded-md shadow-xl">
         <img src="{{ $source }}" alt="">
         <div class="p-4">
             <h2 class="text-lg mb-1">{{ $title }}</h2>
