@@ -30,6 +30,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
 Route::get('/test', function(){
-    $str = 'public/images/books/acsasdasf.jpg';
-    echo substr($str, 20, strlen($str));
+    echo 'test';
 });
