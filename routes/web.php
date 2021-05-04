@@ -4,6 +4,7 @@ use App\Http\Livewire\Book;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Test;
 use App\Http\Livewire\Books;
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 
 
-Route::get('/test', function(){
-    echo 'test';
+Route::get('/test', function() {
+    echo Storage::url('public\images\books\88bbd880672b05ef2d0dedfeeae2ccb1.png');
 });
