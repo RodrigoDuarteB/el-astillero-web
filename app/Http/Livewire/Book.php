@@ -10,7 +10,10 @@ use Livewire\WithFileUploads;
 class Book extends Component{
     use WithFileUploads;
 
-    public $book, $front_image, $back_image;
+    public BookModel $book;
+
+    // images
+    public $front_image, $back_image;
 
     public $open_edit = false;
 
@@ -21,10 +24,6 @@ class Book extends Component{
         'book.genre' => 'required|string|max:255',
         'book.publisher' => 'required|string|max:255'
     ];
-
-    public function mount(BookModel $book){
-        $this->book = $book;
-    }
 
     public function render(){
         return view('livewire.book');

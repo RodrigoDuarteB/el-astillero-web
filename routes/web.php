@@ -17,7 +17,8 @@ use App\Http\Livewire\Books;
 
 Route::view('/', 'welcome');
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])
+->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::get('test', Test::class)->name('test');
 
@@ -30,6 +31,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
 Route::get('/test', function(){
-    $str = 'public/images/books/acsasdasf.jpg';
-    echo substr($str, 20, strlen($str));
+    $suma = fn(int $x, int $y) => $x + $y;
+    echo public_path('storage\images\books');
 });

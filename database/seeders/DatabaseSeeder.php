@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         Storage::deleteDirectory('images');
-        Storage::deleteDirectory('images/books');
+        Storage::makeDirectory('images/books');
         Book::factory(30)->create();
     }
 }
