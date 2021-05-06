@@ -5,27 +5,48 @@
 <div>
     <div class="container mx-auto">
         <h1 class="px-2 py-4 text-xl text-yellow-900 font-bold">Todos los libros</h1>
+        <x-separator/>
         <div class="px-6 py-4 grid grid-cols-2 sm:grid-cols-4 gap-2">
             <x-jet-input type="text" wire:model="search" placeholder="Buscar.." class="col-span-4"/>
 
-            <select name="sort" id="sort" wire:model="sort" class="w-auto">
+            <x-select wire:model="sort" class="w-full">
                 <option value="" selected disabled>Ordenar por:</option>
                 <option value="title">Título</option>
                 <option value="summary">Resumen</option>
                 <option value="genre">Género</option>
                 <option value="author">Autor</option>
                 <option value="isbn">ISBN</option>
-            </select>
+            </x-select>
 
-            <select name="dir" id="dir" wire:model="direction" class="w-auto">
+            <x-select wire:model="direction" class="w-full">
                 <option value="" selected disabled>Ordenar hacia:</option>
                 <option value="asc">Ascendente</option>
                 <option value="desc">Descendente</option>
-            </select>
+            </x-select>
+
+            {{-- <x-jet-dropdown>
+                <x-slot name="trigger">
+                    <span class="inline-flex rounded-md">
+                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                            {{ auth()->user()->name }}
+
+                            <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </span>
+                </x-slot>
+
+                <x-slot name="content">
+                    <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                        {{ __('Profile') }}
+                    </x-jet-dropdown-link>
+                </x-slot>
+            </x-jet-dropdown> --}}
         </div>
 
-        <div class="px-6 py-2 grid grid-cols-1 justify-end">
-            <a wire:click="$set('open_create', true)" class="py-2 px-6 bg-yellow-900 rounded-xl cursor-pointer text-white text-center md:w-24">Nuevo</a>
+        <div class="px-6 py-2 grid grid-rows-1">
+            <a wire:click="$set('open_create', true)" class="py-2 px-6 bg-yellow-900 rounded-xl cursor-pointer text-white text-center md:w-24 justify-self-end">Nuevo</a>
         </div>
 
         <div class="px-6 py-2 md:px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-4 mb-4">

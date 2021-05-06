@@ -18,7 +18,7 @@ class Books extends GuzzleHttpRequest {
                 return $book;
             }
         }catch(Exception $e){
-            return $e->getMessage();
+            return false;
         }
     }
 

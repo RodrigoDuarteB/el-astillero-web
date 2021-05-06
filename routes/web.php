@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Test;
 use App\Http\Livewire\Books;
 use App\Http\Controllers\BookController;
+use App\Repositories\ApiBooks;
+use App\Repositories\Books as RepositoriesBooks;
 use GuzzleHttp\Client;
 
 Route::view('/', 'welcome');
@@ -48,7 +50,7 @@ Route::get('/test', function() {
     //$myJSON = json_encode($myObj);
     echo $book->id; */
 
-    $client = new Client([
+    /* $client = new Client([
         'headers' => [
             'Content-Type' => 'application/json',
             'Authorization' => '45965_2adb97b0d6cc20d38d9252e12b99fb32',
@@ -60,10 +62,16 @@ Route::get('/test', function() {
     $json = json_decode($response->getBody()->getContents(), true);
     $json["book"]["status"] = $response->getStatusCode();
     $object = (object) $json["book"];
-    return $json;
+    return $json; */
+    return view('test');
 });
 
-Route::get('test2', [BookController::class, 'index'])
+/* Route::get('test2', [BookController::class, 'index'])
 ->name('test2');
 Route::get('test2/{isbn}', [BookController::class, 'show'])
-->name('test2.show');
+->name('test2.show'); */
+
+Route::get('test2', function (RepositoriesBooks $books) {
+    //return var_dump($books->findByIsbn('9788494510335'));
+    return var_dump(ApiBooks::findByIsbn('9788494510335'));
+});
