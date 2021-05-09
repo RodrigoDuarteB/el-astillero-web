@@ -5,39 +5,39 @@
 <div>
     <div class="container mx-auto mb-4">
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <h2 class="text-yellow-900 text-2xl">{{ $book->title.' - '.$book->isbn }}</h2>
+            <h2 class="text-yellow-900 text-2xl">{{ $book->title.' - '.$book->isbn13 }}</h2>
 
             <div class="justify-self-end">
                 <a wire:click="$set('open_edit', true)" class="py-2 px-6 bg-green-400 rounded-xl cursor-pointer">Editar</a>
 
                 <a wire:click="$set('open_delete', true)" class="py-2 px-6 bg-red-400 rounded-xl cursor-pointer">Eliminar</a>
 
-                <a wire:click="$set('open_api', true)" class="py-2 px-6 bg-yellow-900 rounded-xl cursor-pointer text-white">API</a>
+                <a wire:click="$set('openApi', true)" class="py-2 px-6 bg-yellow-900 rounded-xl cursor-pointer text-white">API</a>
             </div>
         </div>
         <!-- images --->
         <div class="p-4 grid grid-cols-1 gap-3 md:grid-cols-2">
             <div class="justify-self-center">
-                <img src="{{ Storage::url('public/images/books/'.$book->front_image) }}" alt="No image" style="width: 600px; height: 700px; background-size: contain">
+                <x-image src="{{ Storage::url('public/images/books/'.$book->cover) }}"/>
             </div>
             <div class="justify-self-center">
-                <img src="{{ Storage::url('public/images/books/'.$book->back_image) }}" alt="No Image" style="width: 600px; height: 700px; background-size: contain">
+                <x-image src="{{ $book->back ? Storage::url('public/images/books/'.$book->back) : Storage::url('public/images/no_image.png') }}"/>
             </div>
         </div>
         {{-- content --}}
-        <x-separator class="mt-4"/>
+        <x-separator class="mt-4 mx-3 sm:mx-0"/>
         <h2 class="text-yellow-900 text-2xl p-4">Información</h2>
         <div class="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <x-card-content class="row-start-2 md:row-start-1 self-start">
+            <x-card-content class="row-start-2 self-start md:row-start-1">
                 <p><span class="font-bold text-yellow-900">Autor: </span> {{ $book->author }}</p>
-                <p><span class="font-bold text-yellow-900">Género: </span> {{ $book->genre }}</p>
-                <p><span class="font-bold text-yellow-900">Año de Publicación: </span> {{ $book->publish_year }}</p>
+                <p><span class="font-bold text-yellow-900">Género: </span> {{ $book->subject }}</p>
+                <p><span class="font-bold text-yellow-900">Año de Publicación: </span> {{ $book->date_published }}</p>
                 <p><span class="font-bold text-yellow-900">Editorial: </span> {{ $book->publisher }}</p>
             </x-card-content>
 
-            <x-card-content class="row-start-1 md:row-start-1">
+            <x-card-content class="row-start-1">
                 <h2 class="font-bold text-yellow-900">Resumen</h2>
-                <p>{{ $book->summary }}</p>
+                <p>{{ $book->synopsys }}</p>
             </x-card-content>
         </div>
     </div>
@@ -154,61 +154,78 @@
     </x-jet-dialog-modal>
 
     {{-- modal for API TEST --}}
-    <x-jet-dialog-modal wire:model="open_api">
+    <x-jet-dialog-modal wire:model="openApi">
         <x-slot name="title">
             Prueba API {{ $isbn }}
         </x-slot>
 
         <x-slot name="content">
-            <div class="grid grid-cols-3 gap-2">
-                <div class="mb-4 col-span-2">
+            @php
+                $n = $message ? '2' : '1'
+            @endphp
+            {{-- Search by isbn --}}
+            <div class="grid grid-rows-{{ $n }} gap-2">
+                <div class="mb-4">
                     <x-jet-label value="ISBN"/>
-                    <x-jet-input type="number" class="w-full" wire:model='isbn'/>
+                    <x-input type="number" class="w-full" autofocus wire:model='isbn'/>
                     <x-jet-input-error for="isbn"/>
                 </div>
-
-                <x-jet-danger-button wire:click="getByIsbn" wire:loading.attr='disabled' wire:target='getByIsbn' class="disabled:opacity-25 self-center">
-                    Buscar
-                </x-jet-danger-button>
+                <p class="text-red-500">{{ $message }}</p>
             </div>
+
+            {{-- Search by title --}}
+            @if ($message)
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="mb-4 col-span-2">
+                        <x-jet-label value="Título"/>
+                        <x-jet-input type="text" class="w-full" wire:model='title'/>
+                        <x-jet-input-error for="title"/>
+                    </div>
+
+                    <x-jet-danger-button wire:click="getByTitle" wire:loading.attr='disabled' wire:target='getByIsbn, getByTitle' class="disabled:opacity-25 self-center">
+                        Buscar
+                    </x-jet-danger-button>
+                </div>
+            @endif
+
             @if ($api)
-                <img src="{{ $api->image }}" class="mb-4">
+                @if (isset($api->image))
+                    <img src="{{ $api->image }}" class="mb-4">
+                @endif
                 <div class="mb-4">
                     <x-jet-label value="Título"/>
-                    <x-jet-input type="text" class="w-full" value="{{ $api->title }}"/>
+                    <x-jet-input type="text" class="w-full" value="{{ isset($api->title) ? $api->title : '' }}"/>
                     {{-- <x-jet-input-error for="apiBook.title"/> --}}
                 </div>
 
                 <div class="mb-4">
                     <x-jet-label value="Edición"/>
-                    <x-jet-input type="text" class="w-full" value="{{ $api->edition }}"/>
+                    <x-jet-input type="text" class="w-full" value="{{ isset($api->edition) ? $api->edition : '' }}"/>
                     {{-- <x-jet-input-error for="apiBook.title"/> --}}
                 </div>
 
                 <div class="mb-4">
                     <x-jet-label value="Páginas"/>
-                    <x-jet-input type="text" class="w-full" value="{{ $api->pages }}"/>
+                    <x-jet-input type="text" class="w-full" value="{{ isset($api->pages) ? $api->pages : '' }}"/>
                     {{-- <x-jet-input-error for="apiBook.title"/> --}}
                 </div>
 
                 <div class="mb-4">
                     <x-jet-label value="Author"/>
-                    <x-jet-input type="text" class="w-full" value="{{ $api->authors[0] }}"/>
+                    <x-jet-input type="text" class="w-full" value="{{ isset($api->authors) ? $api->authors[0] : '' }}"/>
                     {{-- <x-jet-input-error for="apiBook.title"/> --}}
                 </div>
 
                 <div class="mb-4">
                     <x-jet-label value="isbn 10"/>
-                    <x-jet-input type="text" class="w-full" value="{{ $api->isbn }}"/>
+                    <x-jet-input type="text" class="w-full" value="{{ isset($api->isbn) ? $api->isbn : '' }}"/>
                     {{-- <x-jet-input-error for="apiBook.title"/> --}}
                 </div>
-            @else
-                <span>No se encontró..</span>
             @endif
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$set('open_api', false)">
+            <x-jet-secondary-button wire:click="$set('openApi', false)">
                 Cancelar
             </x-jet-secondary-button>
 

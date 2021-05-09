@@ -15,15 +15,28 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
+            // from isbndb API
             $table->string('title');
-            $table->text('summary')->nullable();
-            $table->string('genre');
-            $table->string('author');
-            $table->string('publish_year');
-            $table->string('publisher');
-            $table->string('front_image');
-            $table->string('back_image')->nullable();
+            $table->text('title_long')->nullable();
             $table->string('isbn')->unique();
+            $table->string('isbn13')->unique();
+            $table->string('dewey_decimal');
+            $table->string('binding')->nullable();
+            $table->string('publisher');
+            $table->string('language');
+            $table->dateTime('date_published');
+            $table->string('edition')->nullable();
+            $table->unsignedInteger('pages');
+            $table->string('dimensions')->nullable();
+            $table->text('overview')->nullable();
+            $table->string('cover');
+            $table->string('back')->nullable();
+            $table->string('excerpt')->nullable();
+            $table->text('synopsys');
+            $table->string('author');
+            $table->string('subject');
+            //own
+            $table->unsignedInteger('stock')->default(0);
         });
     }
 

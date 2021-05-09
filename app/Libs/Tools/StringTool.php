@@ -14,5 +14,12 @@
             return ucwords(strtolower($string));
         }
 
+        public static function replaceSpacesWith(string $string, string $replace): string {
+            if(!is_string($string)){
+                throw new \Exception('Argument value is not string');
+            }
+            return str_replace(' ', $replace, strtolower($string));
+        }
+
     }
 

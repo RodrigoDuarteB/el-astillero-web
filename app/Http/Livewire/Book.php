@@ -17,9 +17,9 @@ class Book extends Component{
 
     //api
     protected $apiBook;
-    public $isbn;
+    public $isbn, $title, $message;
 
-    public $open_edit, $open_delete, $open_api = false;
+    public $open_edit, $open_delete, $openApi = false;
 
     public $rules = [
         'book.title' => 'required|string|max:255',
@@ -28,8 +28,7 @@ class Book extends Component{
         'book.genre' => 'required|string|max:255',
         'book.publisher' => 'required|string|max:255',
         'book.isbn' => 'required|numeric',
-        'book.publish_year' => 'required|min:4|date_format:Y',
-        'apiBook.title' => 'required'
+        'book.publish_year' => 'required|min:4|date_format:Y'
     ];
 
     public function render(){
@@ -63,6 +62,21 @@ class Book extends Component{
 
     public function getByIsbn(){
         $this->apiBook = ApiBooks::findByIsbn($this->isbn);
+        if(!$this->apiBook){
+            $this->message = "No se encontró el libro por el isbn, intente por el título";
+        }
+    }
+
+    public function getByTitle(){
+        $this->apiBook = ApiBooks::findByTitle($this->title);
+    }
+
+    public function updatedIsbn(){
+        $this->getByIsbn();
+    }
+
+    public function updatedOpenapi(){
+        $this->reset(['isbn', 'message']);
     }
 
 }
