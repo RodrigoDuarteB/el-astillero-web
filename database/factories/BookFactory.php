@@ -24,7 +24,7 @@ class BookFactory extends Factory
         return [
             'title' => $this->faker->sentence(random_int(1, 5)),
             'title_long' => $this->faker->optional(0.6)
-            ->text(random_int(1, 100)),
+            ->text(random_int(20, 200)),
             'isbn' => $this->faker->unique()->numerify('##########'),
             'isbn13' => $this->faker->unique()->numerify('978##########'),
             'dewey_decimal' => $this->faker->

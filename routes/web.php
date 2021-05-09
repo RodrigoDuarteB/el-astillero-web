@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Book as ModelsBook;
 
 Route::view('/', 'welcome');
 
@@ -36,17 +37,17 @@ Route::get('test2', function (Client $client) {
     /* $json["book"]["status"] = $response->getStatusCode();
     $object = (object) $json["book"]; */
     //return $json["books"];
-    return var_dump(ApiBooks::findByIsbn('9789584503534'));
+    //return var_dump(ApiBooks::findByIsbn('9789584503534'));
     //return var_dump(ApiBooks::getStats());
     //return var_dump(isset($novar));
     //return StringTool::replaceSpacesWith('de amor y de sombra', '%20');
-    /* $url = "https://images.isbndb.com/covers/00/40/9781593640040.jpg";
+    /* $url = "https://images.isbndb.com/covers/35/34/9789584503534.jpg";
     $info = pathinfo($url);
     $name = time().hash('sha256',$info["filename"]).'.'.$info["extension"];
     $contents = file_get_contents($url);
     Storage::put($name, $contents);
     return Storage::move($name, 'public/images/'.$name); */
-    /* $array = ["hola", "hola"];
-    return var_dump(isset($array[3])); */
-
+    $array = ["image" => "hola", "other" => "hola"];
+    return var_dump(isset($array["image"]));
+    //return ModelsBook::where('isbn13', '9783326667682')->first();
 });
